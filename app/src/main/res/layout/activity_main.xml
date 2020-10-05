@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    tools:context=".screens.MainActivity">
+
+    <EditText
+        android:id="@+id/edtBookName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Book Name"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorBlack">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edtBookPublication"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Book Publication"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorBlack">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edtBookPrice"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Book Price"
+        android:inputType="numberDecimal"
+        android:textColor="@color/colorBlack">
+
+    </EditText>
+
+    <EditText
+        android:id="@+id/edtBookAuthor"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="Book Author"
+        android:inputType="textPersonName"
+        android:textColor="@color/colorBlack">
+
+    </EditText>
+
+    <TextView
+        android:id="@+id/tvBookPublishedDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#f2f2f2"
+        android:padding="10dp"
+        android:text="Book Published Date"
+        android:textColor="@color/colorBlack"
+        android:textSize="16dp">
+
+    </TextView>
+
+    <Button
+        android:id="@+id/btnSubmitBook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:text="Add Book"
+        android:textColor="@color/colorWhite">
+
+    </Button>
+
+</LinearLayout>
