@@ -56,6 +56,7 @@
         android:layout_height="wrap_content"
         android:background="#f2f2f2"
         android:padding="10dp"
+        android:layout_marginTop="10dp"
         android:text="Book Published Date"
         android:textColor="@color/colorBlack"
         android:textSize="16dp">

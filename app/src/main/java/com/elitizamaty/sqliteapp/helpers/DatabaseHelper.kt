@@ -22,7 +22,7 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
 
     override fun onCreate(db: SQLiteDatabase?) {
         val CREATE_BOOK_TABLE =
-            "CREATE TABLE $TABLE_BOOK_NAME ($COLUMN_BOOK_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_BOOK_NAME TEXT, $COLUMN_BOOK_PUBLICATION TEXT, $COLUMN_BOOK_PRICE TEXT, $COLUMN_BOOK_AUTHOR TEXT, $COLUMN_BOOK_PUBLICATION_DATE TEXT, $COLUMN_BOOK_CREATED_DATE TEXT )"
+                "CREATE TABLE $TABLE_BOOK_NAME ($COLUMN_BOOK_ID INTEGER PRIMARY KEY AUTOINCREMENT, $COLUMN_BOOK_NAME TEXT, $COLUMN_BOOK_PUBLICATION TEXT, $COLUMN_BOOK_PRICE TEXT, $COLUMN_BOOK_AUTHOR TEXT, $COLUMN_BOOK_PUBLICATION_DATE TEXT, $COLUMN_BOOK_CREATED_DATE TEXT )"
         db!!.execSQL(CREATE_BOOK_TABLE)
     }
 
@@ -43,10 +43,30 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         contentValue.put(COLUMN_BOOK_PUBLICATION_DATE, bookModel.bookPublicationDate)
         contentValue.put(COLUMN_BOOK_CREATED_DATE, bookModel.bookCreatedDate)
         val insertId = database.insert(TABLE_BOOK_NAME, null, contentValue)
+        database.close()
         if (insertId < 1) {
             return false
         } else {
             return true
         }
+    }
+
+    fun getBookList(): ArrayList<BookModel> {
+        var bookList = ArrayList<BookModel>()
+        var database = this.readableDatabase
+        var sql = "SELECT * FROM $TABLE_BOOK_NAME"
+        var cursor = database.rawQuery(sql, null)
+        if (cursor.moveToFirst()) {
+            do {
+                val bookModel = BookModel()
+                bookModel.bookId = cursor.getInt(cursor.getColumnIndex(COLUMN_BOOK_ID))
+                bookModel.bookName = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_NAME))
+                bookModel.bookPublication = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PUBLICATION))
+                bookList.add(bookModel)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        database.close()
+        return bookList
     }
 }
