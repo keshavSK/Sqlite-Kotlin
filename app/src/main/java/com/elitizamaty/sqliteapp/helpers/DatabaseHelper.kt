@@ -62,11 +62,24 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
                 bookModel.bookId = cursor.getInt(cursor.getColumnIndex(COLUMN_BOOK_ID))
                 bookModel.bookName = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_NAME))
                 bookModel.bookPublication = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PUBLICATION))
+                bookModel.bookPrice = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PRICE))
                 bookList.add(bookModel)
             } while (cursor.moveToNext())
         }
         cursor.close()
         database.close()
         return bookList
+    }
+
+    fun deleteRecord(bookId: Int): Boolean {
+        var database = this.writableDatabase
+        var deletedRecord = database.delete(TABLE_BOOK_NAME, "$COLUMN_BOOK_ID = ?", arrayOf(bookId.toString()))
+        database.close()
+        if (deletedRecord != -1) {
+            return true
+        } else {
+            return false
+        }
+
     }
 }
