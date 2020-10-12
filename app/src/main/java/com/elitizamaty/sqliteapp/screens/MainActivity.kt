@@ -1,6 +1,7 @@
 package com.elitizamaty.sqliteapp.screens
 
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -43,9 +44,12 @@ class MainActivity : AppCompatActivity() {
             var returnValue = databaseHelper.insertBook(bookModel)
             if (returnValue == true) {
                 Toast.makeText(this, "Book inserted successfully", Toast.LENGTH_LONG).show()
+                var intent = Intent(this, ListViewActivity::class.java)
+                startActivity(intent)
+                finish()
             } else {
                 Toast.makeText(this, "Book not inserted. Please try again", Toast.LENGTH_LONG)
-                    .show()
+                        .show()
             }
         }
 
@@ -56,16 +60,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun showDatePickerDialog() {
         val datePicker =
-            DatePickerDialog(
-                this,
-                DatePickerDialog.OnDateSetListener { datePicker, year, month, dayOfMonth ->
-                    bookPublishedDate = "$dayOfMonth-${month + 1}-$year"
-                    tvBookPublishedDate.text = bookPublishedDate
-                },
-                year!!,
-                month!!,
-                dayOfMonth!!
-            )
+                DatePickerDialog(
+                        this,
+                        DatePickerDialog.OnDateSetListener { datePicker, year, month, dayOfMonth ->
+                            bookPublishedDate = "$dayOfMonth-${month + 1}-$year"
+                            tvBookPublishedDate.text = bookPublishedDate
+                        },
+                        year!!,
+                        month!!,
+                        dayOfMonth!!
+                )
         datePicker.show()
     }
 }

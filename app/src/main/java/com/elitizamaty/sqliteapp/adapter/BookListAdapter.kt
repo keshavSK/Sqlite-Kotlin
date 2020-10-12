@@ -7,12 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.elitizamaty.sqliteapp.BookModel
 import com.elitizamaty.sqliteapp.R
 import com.elitizamaty.sqliteapp.helpers.DatabaseHelper
+import com.elitizamaty.sqliteapp.screens.BookDetailsActivity
 import com.elitizamaty.sqliteapp.screens.ListViewActivity
 
 
@@ -24,6 +26,7 @@ class BookListAdapter(var context: Context, var list: ArrayList<BookModel>) : Re
         var tvBookPublication = itemView.findViewById<TextView>(R.id.rowBookPublication)
         var tvBookPrice = itemView.findViewById<TextView>(R.id.rowBookPrice)
         var imgDelete = itemView.findViewById<ImageView>(R.id.imgDelete)
+        var layout = itemView.findViewById<LinearLayout>(R.id.rowLayout)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -49,6 +52,11 @@ class BookListAdapter(var context: Context, var list: ArrayList<BookModel>) : Re
             } else {
                 Toast.makeText(context, "Please try again. record not deleted", Toast.LENGTH_LONG).show()
             }
+        }
+        holder.layout.setOnClickListener {
+            var intent = Intent(context, BookDetailsActivity::class.java)
+            intent.putExtra("BookId", list[position].bookId)
+            context.startActivity(intent)
         }
     }
 }

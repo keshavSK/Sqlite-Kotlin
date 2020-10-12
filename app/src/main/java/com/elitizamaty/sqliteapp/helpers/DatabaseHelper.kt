@@ -82,4 +82,23 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         }
 
     }
+
+    fun getBookDetails(bookId: Int): BookModel {
+        val bookModel = BookModel()
+        var database = this.readableDatabase
+        var sql = "SELECT * FROM $TABLE_BOOK_NAME WHERE $COLUMN_BOOK_ID = $bookId"
+        var cursor = database.rawQuery(sql, null)
+        if (cursor.moveToFirst()) {
+            bookModel.bookId = cursor.getInt(cursor.getColumnIndex(COLUMN_BOOK_ID))
+            bookModel.bookName = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_NAME))
+            bookModel.bookPublication = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PUBLICATION))
+            bookModel.bookPrice = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PRICE))
+            bookModel.bookAuthor = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_AUTHOR))
+            bookModel.bookPublicationDate = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_PUBLICATION_DATE))
+            bookModel.bookCreatedDate = cursor.getString(cursor.getColumnIndex(COLUMN_BOOK_CREATED_DATE))
+        }
+        cursor.close()
+        database.close()
+        return bookModel
+    }
 }
