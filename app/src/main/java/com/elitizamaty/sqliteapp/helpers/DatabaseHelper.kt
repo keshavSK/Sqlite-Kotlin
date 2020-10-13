@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import android.util.Log
 import com.elitizamaty.sqliteapp.BookModel
 
 class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
@@ -100,5 +101,22 @@ class DatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME
         cursor.close()
         database.close()
         return bookModel
+    }
+
+    fun updateBook(bookModel: BookModel): Boolean {
+        var database = this.writableDatabase
+        var contentValues = ContentValues()
+        contentValues.put(COLUMN_BOOK_NAME, bookModel.bookName)
+        contentValues.put(COLUMN_BOOK_PUBLICATION, bookModel.bookPublication)
+        contentValues.put(COLUMN_BOOK_AUTHOR, bookModel.bookAuthor)
+        contentValues.put(COLUMN_BOOK_PRICE, bookModel.bookPrice)
+        contentValues.put(COLUMN_BOOK_PUBLICATION_DATE, bookModel.bookPublicationDate)
+        var returnValue = database.update(TABLE_BOOK_NAME, contentValues, "$COLUMN_BOOK_ID = ?", arrayOf(bookModel.bookId.toString()))
+        Log.e("DatabaseHelper", "updateBook: $returnValue")
+        if (returnValue == 0) {
+            return false
+        } else {
+            return true
+        }
     }
 }
